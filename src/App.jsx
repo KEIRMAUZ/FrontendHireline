@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Buscador from './components/buscador';
 import ListaTrabajos from './components/ListaTrabajos';
 import MapaTrabajos from './components/mapaTrabajos';
+import Equipo from './components/Equipo';
+import Footer from './components/Footer';
 
 function App() {
   const [resultados, setResultados] = useState([]);
@@ -98,6 +100,8 @@ function App() {
         return <ListaTrabajos trabajos={resultados || []} />;
       case 'cerca':
         return <MapaTrabajos trabajos={resultados || []} />;
+      case 'equipo':
+        return <Equipo />;
       case 'mejores':
         return (
           <div className="bg-white rounded-lg shadow-lg p-6">
@@ -156,14 +160,14 @@ function App() {
   // Si no hay búsqueda completada, mostrar solo el buscador
   if (!busquedaCompletada && !cargando && (!resultados || resultados.length === 0)) {
     return (
-      <div className="min-h-screen bg-gray-100">
+      <div className="min-h-screen bg-gray-100 flex flex-col">
         <header className="bg-blue-600 text-white shadow-lg">
           <div className="container mx-auto px-4 py-6">
             <h1 className="text-3xl font-bold text-center">Buscador de Trabajos</h1>
           </div>
         </header>
         
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-4 py-8 flex-1">
           <Buscador onBuscar={buscarTrabajos} cargando={cargando} />
           
           {cargando && (
@@ -180,13 +184,14 @@ function App() {
             </div>
           )}
         </main>
+        <Footer />
       </div>
     );
   }
 
   // Página de resultados
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 flex flex-col">
       <header className="bg-blue-600 text-white shadow-lg">
         <div className="container mx-auto px-4 py-6">
           <div className="flex justify-between items-center">
@@ -206,7 +211,7 @@ function App() {
         </div>
       </header>
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 flex-1">
         {cargando && (
           <div className="text-center py-8">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
@@ -267,6 +272,16 @@ function App() {
                   >
                     Cerca de Mí
                   </button>
+                  <button
+                    onClick={() => setPestañaActiva('equipo')}
+                    className={`px-6 py-3 rounded-md font-medium transition-all ${
+                      pestañaActiva === 'equipo'
+                        ? 'bg-indigo-600 text-white shadow-md'
+                        : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+                    }`}
+                  >
+                    Equipo
+                  </button>
                 </div>
               </div>
             </div>
@@ -278,6 +293,7 @@ function App() {
           </div>
         )}
       </main>
+      <Footer />
     </div>
   );
 }
