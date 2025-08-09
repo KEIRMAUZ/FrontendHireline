@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Buscador from './components/Buscador';
+import Buscador from './components/buscador';
 import ListaTrabajos from './components/ListaTrabajos';
 import MapaTrabajos from './components/mapaTrabajos';
 
@@ -22,7 +22,7 @@ function App() {
     setBusquedaCompletada(false);
     
     try {
-      const response = await fetch('http://localhost:3002/api/scraping', {
+      const response = await fetch('https://backendhireline.onrender.com/api/scraping', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
