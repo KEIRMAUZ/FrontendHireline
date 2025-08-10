@@ -26,17 +26,17 @@ const ListaTrabajos = ({ trabajos }) => {
       
       <div className="space-y-6">
         {trabajos.map((trabajo, index) => (
-          <div key={index} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow bg-gray-50">
-            <div className="flex justify-between items-start mb-4">
-              <h3 className="font-semibold text-xl text-gray-800 flex-1 mr-4">
+          <div key={index} className="border border-gray-200 rounded-lg p-4 sm:p-6 hover:shadow-md transition-shadow bg-gray-50">
+            <div className="flex flex-col sm:flex-row justify-between items-start mb-4 space-y-2 sm:space-y-0">
+              <h3 className="font-semibold text-lg sm:text-xl text-gray-800 flex-1 mr-0 sm:mr-4">
                 {trabajo.titulo || 'Sin título'}
               </h3>
-              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium self-start sm:self-auto">
                 #{index + 1}
               </span>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
               <div className="bg-green-50 p-3 rounded-lg">
                 <div className="text-sm text-gray-600 font-medium">Sueldo</div>
                 <div className="text-green-700 font-bold text-lg">
@@ -63,19 +63,19 @@ const ListaTrabajos = ({ trabajos }) => {
             </div>
             
             <div className="border-t border-gray-200 pt-4">
-              <div className="flex justify-between items-center mb-2">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 space-y-2 sm:space-y-0">
                 <div className="text-sm text-gray-600 font-medium">Descripción</div>
                 <button 
-                  className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
+                  className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors self-start sm:self-auto"
                   onClick={() => toggleDescripcion(index)}
                 >
                   {descripcionesExpandidas[index] ? 'Ver menos' : 'Ver descripción completa'}
                 </button>
               </div>
-              <div className={`text-gray-700 leading-relaxed ${
+              <div className={`text-gray-700 leading-relaxed text-sm sm:text-base ${
                 descripcionesExpandidas[index] 
                   ? 'max-h-none' 
-                  : 'max-h-24 overflow-hidden'
+                  : 'max-h-20 sm:max-h-24 overflow-hidden'
               }`}>
                 {trabajo.descripcionLimpia || 'Sin descripción disponible'}
               </div>
@@ -92,7 +92,7 @@ const ListaTrabajos = ({ trabajos }) => {
                   href={trabajo.URLPuesto} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors"
+                  className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors text-sm sm:text-base"
                 >
                   Ver oferta completa
                   <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -42,7 +42,7 @@ const EquipoCard = ({ persona }) => (
   <div className="w-full bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center">
     <Avatar name={persona.nombre} color={persona.color} />
     <h3 className="mt-4 text-lg font-semibold text-gray-800">{persona.nombre}</h3>
-    <p className="text-gray-600">{persona.titulo}</p>
+    <p className="text-base text-gray-600">{persona.titulo}</p>
 
     <div className="mt-4 w-full space-y-2 text-sm text-gray-700">
       <div className="flex items-center justify-center gap-2">
@@ -100,7 +100,7 @@ const Equipo = () => {
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
       <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Nuestro Equipo</h2>
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {integrantes.map((persona) => (
           <EquipoCard key={persona.email} persona={persona} />
         ))}

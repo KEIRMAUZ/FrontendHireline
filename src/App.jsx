@@ -35,7 +35,21 @@ function App() {
       const data = await response.json();
       
       if (data.success) {
-        setResultados(data.resultados);
+        console.log('Datos recibidos del backend:', data.resultados);
+        console.log('Primer trabajo:', data.resultados[0]);
+        
+        // Limpiar y procesar los datos
+        const trabajosLimpios = data.resultados.map(trabajo => ({
+          ...trabajo,
+          titulo: limpiarTexto(trabajo.titulo),
+          sueldo: limpiarTexto(trabajo.sueldo),
+          ubicacionLimpia: limpiarTexto(trabajo.ubicacion),
+          descripcionLimpia: limpiarTexto(trabajo.descripcion),
+          ingles: limpiarTexto(trabajo.ingles),
+          tiempo: limpiarTexto(trabajo.tiempo)
+        }));
+        
+        setResultados(trabajosLimpios);
         setBusquedaCompletada(true);
       } else {
         setError(data.error || 'Error al realizar la búsqueda');
@@ -46,6 +60,17 @@ function App() {
     } finally {
       setCargando(false);
     }
+  };
+
+  // Función para limpiar texto (eliminar espacios extra, saltos de línea, etc.)
+  const limpiarTexto = (texto) => {
+    if (!texto) return '';
+    return texto
+      .replace(/\s+/g, ' ') // Reemplazar múltiples espacios con uno solo
+      .replace(/\n/g, ' ') // Reemplazar saltos de línea con espacios
+      .replace(/\r/g, '') // Eliminar retornos de carro
+      .replace(/\t/g, ' ') // Reemplazar tabulaciones con espacios
+      .trim(); // Eliminar espacios al inicio y final
   };
 
   const nuevaBusqueda = () => {
@@ -194,17 +219,17 @@ function App() {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <header className="bg-blue-600 text-white shadow-lg">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold">Buscador de Trabajos</h1>
+          <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+            <h1 className="text-2xl sm:text-3xl font-bold text-center sm:text-left">Buscador de Trabajos</h1>
             <button
               onClick={nuevaBusqueda}
-              className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors w-full sm:w-auto"
             >
               Nueva Búsqueda
             </button>
           </div>
           {terminoBusqueda && (
-            <p className="text-center mt-2 text-blue-100">
+            <p className="text-center mt-2 text-blue-100 text-sm sm:text-base">
               Resultados para: <span className="font-semibold">{terminoBusqueda}</span>
             </p>
           )}
@@ -230,11 +255,11 @@ function App() {
           <div className="mt-8">
             {/* Pestañas */}
             <div className="flex justify-center mb-6">
-              <div className="bg-white rounded-lg shadow-md p-1">
-                <div className="flex space-x-1">
+              <div className="bg-white rounded-lg shadow-md p-1 w-full max-w-4xl">
+                <div className="flex flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-1">
                   <button
                     onClick={() => setPestañaActiva('todos')}
-                    className={`px-6 py-3 rounded-md font-medium transition-all ${
+                    className={`px-4 sm:px-6 py-3 rounded-md font-medium transition-all text-sm sm:text-base ${
                       pestañaActiva === 'todos'
                         ? 'bg-blue-600 text-white shadow-md'
                         : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
@@ -244,7 +269,7 @@ function App() {
                   </button>
                   <button
                     onClick={() => setPestañaActiva('mejores')}
-                    className={`px-6 py-3 rounded-md font-medium transition-all ${
+                    className={`px-4 sm:px-6 py-3 rounded-md font-medium transition-all text-sm sm:text-base ${
                       pestañaActiva === 'mejores'
                         ? 'bg-green-600 text-white shadow-md'
                         : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
@@ -254,7 +279,7 @@ function App() {
                   </button>
                   <button
                     onClick={() => setPestañaActiva('peores')}
-                    className={`px-6 py-3 rounded-md font-medium transition-all ${
+                    className={`px-4 sm:px-6 py-3 rounded-md font-medium transition-all text-sm sm:text-base ${
                       pestañaActiva === 'peores'
                         ? 'bg-orange-600 text-white shadow-md'
                         : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
@@ -264,7 +289,7 @@ function App() {
                   </button>
                   <button
                     onClick={() => setPestañaActiva('cerca')}
-                    className={`px-6 py-3 rounded-md font-medium transition-all ${
+                    className={`px-4 sm:px-6 py-3 rounded-md font-medium transition-all text-sm sm:text-base ${
                       pestañaActiva === 'cerca'
                         ? 'bg-purple-600 text-white shadow-md'
                         : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
@@ -274,7 +299,7 @@ function App() {
                   </button>
                   <button
                     onClick={() => setPestañaActiva('equipo')}
-                    className={`px-6 py-3 rounded-md font-medium transition-all ${
+                    className={`px-4 sm:px-6 py-3 rounded-md font-medium transition-all text-sm sm:text-base ${
                       pestañaActiva === 'equipo'
                         ? 'bg-indigo-600 text-white shadow-md'
                         : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
